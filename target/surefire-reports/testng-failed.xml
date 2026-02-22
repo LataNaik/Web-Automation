@@ -5,6 +5,7 @@
     <groups>
       <run>
         <include name="regression"/>
+        <include name="regression"/>
       </run>
     </groups>
     <classes>
@@ -14,6 +15,7 @@
           <include name="setup"/>
           <include name="verifyContinueButtonNavigates"/>
           <include name="tearDown"/>
+          <include name="verifyCreateCampaignLinkNavigates"/>
         </methods>
       </class> <!-- tests.CampaignLandingTest -->
       <class name="tests.BednetDraftCampaignTest">

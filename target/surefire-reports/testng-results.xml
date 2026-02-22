@@ -1,83 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-02-22T13:50:44 IST" name="Web Automation Suite" finished-at="2026-02-22T13:52:42 IST" duration-ms="118332">
+  <suite started-at="2026-02-22T15:10:41 IST" name="Surefire suite" finished-at="2026-02-22T15:11:03 IST" duration-ms="21663">
     <groups>
       <group name="regression">
-        <method signature="BednetDraftCampaignTest.verifySelectBednetDistributionAndClickNext()[pri:0, instance:tests.BednetDraftCampaignTest@4fe767f3]" name="verifySelectBednetDistributionAndClickNext" class="tests.BednetDraftCampaignTest"/>
-        <method signature="CampaignLandingTest.verifyContinueButtonNavigates()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" name="verifyContinueButtonNavigates" class="tests.CampaignLandingTest"/>
-        <method signature="CampaignLandingTest.verifyCreateCampaignLinkNavigates()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" name="verifyCreateCampaignLinkNavigates" class="tests.CampaignLandingTest"/>
-        <method signature="WorkbenchLoginTest.verifySuccessfulLoginRedirectsToHomePage()[pri:0, instance:tests.WorkbenchLoginTest@13acb0d1]" name="verifySuccessfulLoginRedirectsToHomePage" class="tests.WorkbenchLoginTest"/>
+        <method signature="BednetDraftCampaignTest.verifySelectBednetDistributionAndClickNext()[pri:0, instance:tests.BednetDraftCampaignTest@11c20519]" name="verifySelectBednetDistributionAndClickNext" class="tests.BednetDraftCampaignTest"/>
       </group> <!-- regression -->
     </groups>
-    <test started-at="2026-02-22T13:50:44 IST" name="Regression Tests" finished-at="2026-02-22T13:52:42 IST" duration-ms="118332">
-      <class name="tests.WorkbenchLoginTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.WorkbenchLoginTest@13acb0d1]" started-at="2026-02-22T13:50:44 IST" name="setup" finished-at="2026-02-22T13:51:24 IST" duration-ms="39833" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifySuccessfulLoginRedirectsToHomePage()[pri:0, instance:tests.WorkbenchLoginTest@13acb0d1]" started-at="2026-02-22T13:51:24 IST" name="verifySuccessfulLoginRedirectsToHomePage" finished-at="2026-02-22T13:51:29 IST" duration-ms="4917" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifySuccessfulLoginRedirectsToHomePage -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.WorkbenchLoginTest@13acb0d1]" started-at="2026-02-22T13:51:29 IST" name="tearDown" finished-at="2026-02-22T13:51:29 IST" duration-ms="186" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- tests.WorkbenchLoginTest -->
+    <test started-at="2026-02-22T15:10:41 IST" name="Surefire test" finished-at="2026-02-22T15:11:03 IST" duration-ms="21663">
       <class name="tests.BednetDraftCampaignTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.BednetDraftCampaignTest@4fe767f3]" started-at="2026-02-22T13:52:20 IST" name="setup" finished-at="2026-02-22T13:52:27 IST" duration-ms="6591" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tests.BednetDraftCampaignTest@11c20519]" started-at="2026-02-22T15:10:41 IST" name="setup" finished-at="2026-02-22T15:10:48 IST" duration-ms="7088" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method is-config="true" signature="loginAndNavigateToCreateCampaign()[pri:0, instance:tests.BednetDraftCampaignTest@4fe767f3]" started-at="2026-02-22T13:52:27 IST" name="loginAndNavigateToCreateCampaign" finished-at="2026-02-22T13:52:41 IST" depends-on-methods="base.WorkbenchBaseTest.setup" duration-ms="13684" status="PASS">
+        <test-method is-config="true" signature="loginAndNavigateToCreateCampaign()[pri:0, instance:tests.BednetDraftCampaignTest@11c20519]" started-at="2026-02-22T15:10:48 IST" name="loginAndNavigateToCreateCampaign" finished-at="2026-02-22T15:10:59 IST" depends-on-methods="base.WorkbenchBaseTest.setup" duration-ms="10928" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loginAndNavigateToCreateCampaign -->
-        <test-method signature="verifySelectBednetDistributionAndClickNext()[pri:0, instance:tests.BednetDraftCampaignTest@4fe767f3]" started-at="2026-02-22T13:52:41 IST" name="verifySelectBednetDistributionAndClickNext" finished-at="2026-02-22T13:52:42 IST" duration-ms="1304" status="PASS">
+        <test-method signature="verifySelectBednetDistributionAndClickNext()[pri:0, instance:tests.BednetDraftCampaignTest@11c20519]" started-at="2026-02-22T15:10:59 IST" name="verifySelectBednetDistributionAndClickNext" finished-at="2026-02-22T15:11:02 IST" duration-ms="3396" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- verifySelectBednetDistributionAndClickNext -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.BednetDraftCampaignTest@4fe767f3]" started-at="2026-02-22T13:52:42 IST" name="tearDown" finished-at="2026-02-22T13:52:42 IST" duration-ms="205" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.BednetDraftCampaignTest@11c20519]" started-at="2026-02-22T15:11:02 IST" name="tearDown" finished-at="2026-02-22T15:11:03 IST" duration-ms="205" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
       </class> <!-- tests.BednetDraftCampaignTest -->
-      <class name="tests.CampaignLandingTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:51:29 IST" name="setup" finished-at="2026-02-22T13:51:35 IST" duration-ms="6327" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method is-config="true" signature="loginAndNavigate()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:51:35 IST" name="loginAndNavigate" finished-at="2026-02-22T13:51:40 IST" depends-on-methods="base.WorkbenchBaseTest.setup" duration-ms="4981" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- loginAndNavigate -->
-        <test-method signature="verifyContinueButtonNavigates()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:51:40 IST" name="verifyContinueButtonNavigates" finished-at="2026-02-22T13:51:45 IST" duration-ms="4466" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyContinueButtonNavigates -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:51:45 IST" name="tearDown" finished-at="2026-02-22T13:51:45 IST" duration-ms="202" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:51:45 IST" name="setup" finished-at="2026-02-22T13:52:18 IST" duration-ms="32772" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method is-config="true" signature="loginAndNavigate()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:52:18 IST" name="loginAndNavigate" finished-at="2026-02-22T13:52:20 IST" depends-on-methods="base.WorkbenchBaseTest.setup" duration-ms="2049" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- loginAndNavigate -->
-        <test-method signature="verifyCreateCampaignLinkNavigates()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:52:20 IST" name="verifyCreateCampaignLinkNavigates" finished-at="2026-02-22T13:52:20 IST" duration-ms="509" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyCreateCampaignLinkNavigates -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.CampaignLandingTest@79ad8b2f]" started-at="2026-02-22T13:52:20 IST" name="tearDown" finished-at="2026-02-22T13:52:20 IST" duration-ms="196" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- tests.CampaignLandingTest -->
-    </test> <!-- Regression Tests -->
-  </suite> <!-- Web Automation Suite -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
 </testng-results>

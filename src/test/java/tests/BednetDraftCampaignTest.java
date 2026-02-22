@@ -41,6 +41,11 @@ public class BednetDraftCampaignTest extends WorkbenchBaseTest {
         draftPage.selectBednetDistribution();
         draftPage.clickNext();
         page.waitForLoadState();
+        page.waitForTimeout(2000);
+
+        // Clear pre-filled name and enter dynamic datetime-based name
+        draftPage.clearAndEnterDynamicCampaignName();
+
         Assert.assertTrue(page.url().contains("create-campaign"),
                 "Should remain on create campaign flow after selecting Bednet Distribution and clicking Next");
     }

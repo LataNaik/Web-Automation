@@ -26,14 +26,16 @@ public class CampaignLandingPage {
     private Locator cloneCardDescription;
     private Locator scratchCardTitle;
     private Locator scratchCardDescription;
+    private Locator continueButton;
 
     public CampaignLandingPage(Page page) {
         this.page = page;
-        this.createCampaignLink = page.locator(".digit-button-teritiary");
+        this.createCampaignLink = page.locator(".digit-button-label").nth(2);
         
 
        
-        this.scratchCardTitle = page.locator(".digit-campaign-home-text-header");
+        this.scratchCardTitle = page.locator("#campaign-home-card-campaign-create-methods-campaign-create-from-scratch");
+        this.continueButton = page.locator("#campaign-campaign-home-standalone-create-new-campaign-from-scratch-btn");
     }
 
     // --- Actions ---
@@ -55,7 +57,7 @@ public class CampaignLandingPage {
     }
 
     public void clickContinue() {
-        page.getByText("Continue").click();
+        continueButton.click();
     }
 
   
