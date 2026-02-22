@@ -1,5 +1,13 @@
-utils/ConfigReader.class
-pages/LoginPage.class
-tests/LoginTest.class
-base/BaseTest.class
+tests/WorkbenchLoginTest.class
+utils/WorkbenchConfigReader.class
 pages/HomePage.class
+tests/CampaignLandingTest.class
+tests/BednetDraftCampaignTest.class
+utils/ConfigReader.class
+pages/BednetDraftCampaignPage.class
+tests/LoginTest.class
+pages/LoginPage.class
+pages/CampaignLandingPage.class
+pages/WorkbenchLoginPage.class
+base/BaseTest.class
+base/WorkbenchBaseTest.class
