@@ -3,37 +3,103 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class LoginPage {
+/**
+ * Page Object for Login Page.
+ *
+ * Usage:
+ *   LoginPage login = new LoginPage(page);
+ *   HomePage home = login.login("username", "password");
+ */
+public class LoginPage extends BasePage {
 
-    private Locator username;
-    private Locator password;
-    private Locator tenant;
-    private Locator tenantId;
-    private Locator privacy;
-    private Locator loginBtn;
-
+    // Locators
+    private final Locator usernameInput;
+    private final Locator passwordInput;
+    private final Locator tenantDropdown;
+    private final Locator tenantOption;
+    private final Locator privacyCheckbox;
+    private final Locator loginButton;
 
     public LoginPage(Page page) {
-        this.username = page.locator("input[name='username']");
-        this.password = page.locator("input[name='password']");
-        this.tenant = page.locator("#user-login-core_common_city");
-        this.tenantId=page.locator(".main-option");
-        this.privacy = page.locator("#privacy-component-check");
-        this.loginBtn = page.locator("#user-login-continue");
-
+        super(page);
+        this.usernameInput = page.locator("input[name='username']");
+        this.passwordInput = page.locator("input[name='password']");
+        this.tenantDropdown = page.locator("#user-login-core_common_city");
+        this.tenantOption = page.locator(".main-option");
+        this.privacyCheckbox = page.locator("#privacy-component-check");
+        this.loginButton = page.locator("#user-login-continue");
     }
-    
-    public void login(String user, String pass) {
-        username.fill(user);
-        password.fill(pass);
-        tenant.click(); // Open dropdown
-        tenantId.first().click(); // Select first option
-        privacy.click();
-        loginBtn.click();
+
+    /**
+     * Login with credentials and return HomePage.
+     *
+     * @param username Username
+     * @param password Password
+     * @return HomePage object after successful login
+     */
+    public HomePage login(String username, String password) {
+        enterUsername(username);
+        enterPassword(password);
+        selectFirstTenant();
+        acceptPrivacyPolicy();
+        clickLogin();
+        waitForPageLoad();
+        return new HomePage(page);
+    }
+
+    /**
+     * Login with specific tenant selection.
+     *
+     * @param username   Username
+     * @param password   Password
+     * @param tenantName Name of tenant to select
+     * @return HomePage object after successful login
+     */
+    public HomePage login(String username, String password, String tenantName) {
+        enterUsername(username);
+        enterPassword(password);
+        selectTenant(tenantName);
+        acceptPrivacyPolicy();
+        clickLogin();
+        waitForPageLoad();
+        return new HomePage(page);
+    }
+
+    // ==================== INDIVIDUAL ACTIONS ====================
+
+    public void enterUsername(String username) {
+        usernameInput.fill(username);
+    }
+
+    public void enterPassword(String password) {
+        passwordInput.fill(password);
+    }
+
+    public void selectFirstTenant() {
+        tenantDropdown.click();
+        tenantOption.first().click();
+    }
+
+    public void selectTenant(String tenantName) {
+        tenantDropdown.click();
+        page.getByText(tenantName).click();
+    }
+
+    public void acceptPrivacyPolicy() {
+        privacyCheckbox.click();
+    }
+
+    public void clickLogin() {
+        loginButton.click();
+    }
+
+    // ==================== VERIFICATION ====================
+
+    public boolean isLoginPageDisplayed() {
+        return loginButton.isVisible();
+    }
+
+    public String getErrorMessage() {
+        return page.locator(".error-message").textContent();
     }
 }
-//   options:                                                                                                                  
-//   - page.locator("#username") - by ID                                                                                       
-//   - page.locator("input[name='username']") - by name attribute                                                              
-//   - page.getByPlaceholder("Username") - by placeholder text                                                                 
-//   - page.getByLabel("Username") - by associated label  
