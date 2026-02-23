@@ -8,7 +8,7 @@
             </run>
         </groups>
         <classes>
-            <class name="tests.LoginTest"/>
+            <class name="tests.WorkbenchLoginTest"/>
             <class name="tests.CampaignLandingTest"/>
             <class name="tests.BednetDraftCampaignTest"/>
         </classes>

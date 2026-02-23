@@ -3,13 +3,13 @@ package utils;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-public class ConfigReader {
+public class WorkbenchConfigReader {
 
     static Properties prop = new Properties();
 
     static {
         try {
-            FileInputStream fis = new FileInputStream("src/test/resources/config.properties");
+            FileInputStream fis = new FileInputStream("src/test/resources/workbench-config.properties");
             prop.load(fis);
         } catch (Exception e) {
             e.printStackTrace();
@@ -20,4 +20,3 @@ public class ConfigReader {
         return prop.getProperty(key);
     }
 }
-

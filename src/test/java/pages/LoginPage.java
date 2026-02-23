@@ -5,80 +5,35 @@ import com.microsoft.playwright.Page;
 
 public class LoginPage {
 
-    private Page page;
-    private Locator usernameInput;
-    private Locator passwordInput;
-    private Locator privacyCheckbox;
-    private Locator loginButton;
-    private Locator errorMessage;
+    private Locator username;
+    private Locator password;
+    private Locator tenant;
+    private Locator tenantId;
+    private Locator privacy;
+    private Locator loginBtn;
+
 
     public LoginPage(Page page) {
-        this.page = page;
-        this.usernameInput = page.locator("input[id='user-login-standalone-core_login_username-field']");
-        this.passwordInput = page.locator("input[id='user-login-standalone-core_login_password-field']");
-        this.privacyCheckbox = page.locator("input[id='privacy-component-check']");
-        this.loginButton = page.locator("#formcomposer-submit-action");
-        this.errorMessage = page.locator(".digit-toast-success.animate.digit-error");
-    }
+        this.username = page.locator("input[name='username']");
+        this.password = page.locator("input[name='password']");
+        this.tenant = page.locator("#user-login-core_common_city");
+        this.tenantId=page.locator(".main-option");
+        this.privacy = page.locator("#privacy-component-check");
+        this.loginBtn = page.locator("#user-login-continue");
 
-    public void enterUsername(String username) {
-        usernameInput.fill(username);
     }
-
-    public void enterPassword(String password) {
-        passwordInput.fill(password);
-    }
-
-    public void checkPrivacy() {
-        privacyCheckbox.click();
-    }
-
-    public void clickLogin() {
-        loginButton.click();
-    }
-
-    public void login(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
-        checkPrivacy();
-        clickLogin();
-    }
-
-    public boolean isUsernameVisible() {
-        return usernameInput.isVisible();
-    }
-
-    public boolean isPasswordVisible() {
-        return passwordInput.isVisible();
-    }
-
-    public boolean isPrivacyCheckboxVisible() {
-        return privacyCheckbox.isVisible();
-    }
-
-    public boolean isLoginButtonVisible() {
-        return loginButton.isVisible();
-    }
-
-    public boolean isLoginButtonEnabled() {
-        return loginButton.isEnabled();
-    }
-
-    public boolean isErrorMessageVisible() {
-        errorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        return errorMessage.isVisible();
-    }
-
-    public String getErrorMessageText() {
-        errorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        return errorMessage.textContent();
-    }
-
-    public String getUsernamePlaceholder() {
-        return usernameInput.getAttribute("placeholder");
-    }
-
-    public String getPasswordPlaceholder() {
-        return passwordInput.getAttribute("placeholder");
+    
+    public void login(String user, String pass) {
+        username.fill(user);
+        password.fill(pass);
+        tenant.click(); // Open dropdown
+        tenantId.first().click(); // Select first option
+        privacy.click();
+        loginBtn.click();
     }
 }
+//   options:                                                                                                                  
+//   - page.locator("#username") - by ID                                                                                       
+//   - page.locator("input[name='username']") - by name attribute                                                              
+//   - page.getByPlaceholder("Username") - by placeholder text                                                                 
+//   - page.getByLabel("Username") - by associated label  
