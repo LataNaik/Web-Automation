@@ -4,15 +4,38 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
-import pages.HomePage;
 
+/**
+ * Test class for Login functionality.
+ *
+ * Note: Login happens automatically in BaseTest.setup()
+ * These tests verify the login was successful.
+ */
 public class LoginTest extends BaseTest {
 
     @Test
     public void verifyUserCanLogin() {
         // Login is handled automatically in BaseTest.setup()
-        HomePage homePage = new HomePage(page);
-        Assert.assertTrue(homePage.isHomeVisible(), "Home element is not visible after login");
+        // homePage is available directly after login
+        Assert.assertTrue(homePage.isHomeDisplayed(), "Home page should be displayed after login");
+    }
+
+    @Test
+    public void verifyHomePageElements() {
+        // Verify expected elements are visible on home page
+        Assert.assertTrue(homePage.isCreateComplaintVisible(), "Create Complaint button should be visible");
+        Assert.assertTrue(homePage.isSearchComplaintVisible(), "Search Complaint button should be visible");
+    }
+
+    @Test
+    public void verifyNavigationFromHome() {
+        // Test navigation to Create Complaint and back
+        homePage.goToCreateComplaint();
+
+        // Navigate back to home
+        nav.goToHome();
+
+        // Verify we're back on home page
+        Assert.assertTrue(homePage.isHomeDisplayed(), "Should be back on home page");
     }
 }
-

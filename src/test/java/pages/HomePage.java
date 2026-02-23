@@ -3,41 +3,124 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class HomePage {
+/**
+ * Page Object for Home Page (Dashboard after login).
+ *
+ * Usage:
+ *   HomePage home = new HomePage(page);
+ *
+ *   // Navigate to other pages (returns page object)
+ *   ComplaintPage complaint = home.goToCreateComplaint();
+ *
+ *   // Or just navigate without getting page object
+ *   home.navigateToCreateComplaint();
+ */
+public class HomePage extends BasePage {
 
-    private Locator homeElement;
-    private Locator createComplaint;
-    private Locator searchComplaint;
-    private Locator createUser;
-    private Locator searchUser;
-
+    // Locators
+    private final Locator homeElement;
+    private final Locator createComplaintBtn;
+    private final Locator searchComplaintBtn;
+    private final Locator createUserBtn;
+    private final Locator searchUserBtn;
 
     public HomePage(Page page) {
+        super(page);
         this.homeElement = page.locator(".digit-topbar-ulb");
-        this.createComplaint = page.locator("h2.digit-button-label:has-text('Create Complaint')");
-        this.searchComplaint = page.locator("h2.digit-button-label:has-text('Search Complaint')");
-        this.createUser = page.locator("h2.digit-button-label:has-text('Create User')");
-        this.searchUser = page.locator("h2.digit-button-label:has-text('Search User')");
+        this.createComplaintBtn = page.locator("h2.digit-button-label:has-text('Create Complaint')");
+        this.searchComplaintBtn = page.locator("h2.digit-button-label:has-text('Search Complaint')");
+        this.createUserBtn = page.locator("h2.digit-button-label:has-text('Create User')");
+        this.searchUserBtn = page.locator("h2.digit-button-label:has-text('Search User')");
     }
 
+    // ==================== NAVIGATION (Returns Page Object) ====================
+
+    /**
+     * Go to Create Complaint page.
+     *
+     * @return ComplaintPage object
+     */
+    public ComplaintPage goToCreateComplaint() {
+        createComplaintBtn.click();
+        waitForPageLoad();
+        return new ComplaintPage(page);
+    }
+
+    /**
+     * Go to Search Complaint page.
+     * (Add SearchComplaintPage class when needed)
+     */
+    public void goToSearchComplaint() {
+        searchComplaintBtn.click();
+        waitForPageLoad();
+    }
+
+    /**
+     * Go to Create User page.
+     * (Add CreateUserPage class when needed)
+     */
+    public void goToCreateUser() {
+        createUserBtn.click();
+        waitForPageLoad();
+    }
+
+    /**
+     * Go to Search User page.
+     * (Add SearchUserPage class when needed)
+     */
+    public void goToSearchUser() {
+        searchUserBtn.click();
+        waitForPageLoad();
+    }
+
+    // ==================== SIMPLE NAVIGATION (No return) ====================
+
     public void navigateToCreateComplaint() {
-        createComplaint.click();
+        createComplaintBtn.click();
     }
 
     public void navigateToSearchComplaint() {
-        searchComplaint.click();
+        searchComplaintBtn.click();
     }
 
     public void navigateToCreateUser() {
-        createUser.click();
+        createUserBtn.click();
     }
 
     public void navigateToSearchUser() {
-        searchUser.click();
+        searchUserBtn.click();
     }
 
-    public boolean isHomeVisible() {
-        homeElement.waitFor();
+    // ==================== VERIFICATION ====================
+
+    /**
+     * Check if home page is displayed.
+     *
+     * @return true if home element is visible
+     */
+    public boolean isHomeDisplayed() {
+        waitForVisible(homeElement);
         return homeElement.isVisible();
+    }
+
+    /**
+     * Backward compatibility method.
+     */
+    public boolean isHomeVisible() {
+        return isHomeDisplayed();
+    }
+
+    /**
+     * Check if Create Complaint button is visible.
+     */
+    public boolean isCreateComplaintVisible() {
+        return createComplaintBtn.isVisible();
+    }
+
+    /**
+     * Check if Search Complaint button is visible.
+     */
+    public boolean isSearchComplaintVisible() {
+        return searchComplaintBtn.isVisible();
     }
 }
