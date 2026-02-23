@@ -9,7 +9,7 @@ public class ConfigReader {
 
     static {
         try {
-            FileInputStream fis = new FileInputStream("src/test/resources/config.properties");
+            FileInputStream fis = new FileInputStream(".env");
             prop.load(fis);
         } catch (Exception e) {
             e.printStackTrace();
@@ -20,4 +20,3 @@ public class ConfigReader {
         return prop.getProperty(key);
     }
 }
-
