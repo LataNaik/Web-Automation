@@ -27,6 +27,7 @@ public class BaseTest {
                 .setChannel("chrome"));
 
         page = browser.newPage();
+        page.setViewportSize(1800, 900);
         page.setDefaultTimeout(60000);
         page.navigate(ConfigReader.get("base.url"), new Page.NavigateOptions().setTimeout(60000));
 

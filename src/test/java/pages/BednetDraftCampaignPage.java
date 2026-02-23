@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class BednetDraftCampaignPage {
@@ -15,9 +15,9 @@ public class BednetDraftCampaignPage {
     private Locator campaignTypeDropdown;
     private Locator bednetDropdown;
     private Locator nextButton;
-
-    // Campaign name step elements
-    private Locator campaignNameInput;
+    private Locator campaignName;
+    private Locator startDateInput;
+    private Locator endDateInput;
 
     public BednetDraftCampaignPage(Page page) {
         this.page = page;
@@ -25,7 +25,9 @@ public class BednetDraftCampaignPage {
                 new Page.GetByRoleOptions().setName("Select an option"));
         this.bednetDropdown = page.getByRole(AriaRole.BUTTON).nth(1);
         this.nextButton = page.locator("#campaign-create-campaign-formcomposer-setup-campaign-primary-submit-btn");
-        this.campaignNameInput = page.locator("form.setup-campaign input[type='text']");
+        this.campaignName = page.locator("input[name='CampaignName']");
+        this.startDateInput = page.locator("input[placeholder='Start date']");
+        this.endDateInput = page.locator("input[placeholder='End date']");
     }
 
     // --- Actions ---
@@ -45,35 +47,43 @@ public class BednetDraftCampaignPage {
         page.waitForTimeout(1000);
     }
 
-    public void clearAndEnterDynamicCampaignName() {
-        campaignNameInput.waitFor();
-        campaignNameInput.clear();
-        String dynamicName = "Bednet_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        campaignNameInput.fill(dynamicName);
-    }
-
     public void clickNext() {
         nextButton.click();
     }
 
-    // --- Verifications ---
-
-    public boolean isCampaignTypeDropdownVisible() {
-        campaignTypeDropdown.waitFor();
-        return campaignTypeDropdown.isVisible();
+    public void clearAndEnterDynamicCampaignName() {
+        campaignName.clear();
+        String dynamicName = "BednetCampaign" + java.time.LocalDateTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        campaignName.fill(dynamicName);
     }
 
-    public boolean isBednetDropdownVisible() {
-        bednetDropdown.waitFor();
-        return bednetDropdown.isVisible();
+    public void fillStartDate() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        String dayText = String.valueOf(tomorrow.getDayOfMonth());
+        startDateInput.click();
+        page.waitForTimeout(500);
+        // Pick the day from the calendar popup
+        page.locator(".react-datepicker__day--0" + String.format("%02d", tomorrow.getDayOfMonth())
+                + ":not(.react-datepicker__day--outside-month)").first().click();
+        page.waitForTimeout(500);
     }
 
-    public boolean isNextButtonVisible() {
-        nextButton.waitFor();
-        return nextButton.isVisible();
+    public void fillEndDate() {
+        LocalDate oneMonthLater = LocalDate.now().plusMonths(1);
+        endDateInput.click();
+        page.waitForTimeout(500);
+        // Navigate to next month in calendar
+        page.locator(".react-datepicker__navigation--next").click();
+        page.waitForTimeout(500);
+        // Pick the day from the calendar popup
+        page.locator(".react-datepicker__day--0" + String.format("%02d", oneMonthLater.getDayOfMonth())
+                + ":not(.react-datepicker__day--outside-month)").first().click();
+        page.waitForTimeout(500);
     }
 
-    public boolean isNextButtonEnabled() {
-        return nextButton.isEnabled();
+    public void fillStartAndEndDates() {
+        fillStartDate();
+        fillEndDate();
     }
 }
