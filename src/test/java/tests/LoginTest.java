@@ -4,15 +4,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
-import pages.HomePage;
+import pages.LoginPage;
+import utils.ConfigReader;
 
 public class LoginTest extends BaseTest {
 
-    @Test
-    public void verifyUserCanLogin() {
-        // Login is handled automatically in BaseTest.setup()
-        HomePage homePage = new HomePage(page);
-        Assert.assertTrue(homePage.isHomeVisible(), "Home element is not visible after login");
+    @Test(groups = {"regression"})
+    public void verifySuccessfulLoginRedirectsToHomePage() {
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.login(
+                ConfigReader.get("username"),
+                ConfigReader.get("password"));
+
+        page.waitForURL("**/employee/**", new com.microsoft.playwright.Page.WaitForURLOptions().setTimeout(30000));
+        String title = page.title();
+        Assert.assertEquals(title, "DIGIT HCM", "Page title should be 'DIGIT HCM' after successful login");
     }
 }
-

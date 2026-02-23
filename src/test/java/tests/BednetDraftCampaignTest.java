@@ -4,23 +4,23 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import base.WorkbenchBaseTest;
+import base.BaseTest;
 import pages.BednetDraftCampaignPage;
 import pages.CampaignLandingPage;
-import pages.WorkbenchLoginPage;
-import utils.WorkbenchConfigReader;
+import pages.LoginPage;
+import utils.ConfigReader;
 
-public class BednetDraftCampaignTest extends WorkbenchBaseTest {
+public class BednetDraftCampaignTest extends BaseTest {
 
     private CampaignLandingPage landingPage;
     private BednetDraftCampaignPage draftPage;
 
     @BeforeMethod(alwaysRun = true, dependsOnMethods = "setup")
     public void loginAndNavigateToCreateCampaign() {
-        WorkbenchLoginPage loginPage = new WorkbenchLoginPage(page);
+        LoginPage loginPage = new LoginPage(page);
         loginPage.login(
-                WorkbenchConfigReader.get("username"),
-                WorkbenchConfigReader.get("password"));
+                ConfigReader.get("username"),
+                ConfigReader.get("password"));
         page.waitForURL("**/employee", new com.microsoft.playwright.Page.WaitForURLOptions().setTimeout(30000));
 
         landingPage = new CampaignLandingPage(page);

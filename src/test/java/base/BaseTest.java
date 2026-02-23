@@ -8,7 +8,6 @@ import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-import pages.LoginPage;
 import utils.ConfigReader;
 
 public class BaseTest {
@@ -17,7 +16,7 @@ public class BaseTest {
     protected Browser browser;
     protected Page page;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setup() {
         playwright = Playwright.create();
 
@@ -29,16 +28,15 @@ public class BaseTest {
         page = browser.newPage();
         page.setDefaultTimeout(60000);
         page.navigate(ConfigReader.get("base.url"), new Page.NavigateOptions().setTimeout(60000));
-
-        // Login before every test
-        LoginPage loginPage = new LoginPage(page);
-        loginPage.login(ConfigReader.get("username"), ConfigReader.get("password"));
     }
 
-    @AfterMethod
-    public void keepBrowserOpen() throws InterruptedException {
-        // Keep browser open for 5 minutes after test
-        Thread.sleep(10000);
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
+        if (browser != null) {
+            browser.close();
+        }
+        if (playwright != null) {
+            playwright.close();
+        }
     }
 }
-
