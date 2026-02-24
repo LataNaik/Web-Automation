@@ -61,9 +61,9 @@ public class BaseTest {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
                 .setHeadless(Boolean.parseBoolean(ConfigReader.get("HEADLESS")))
                 .setChannel("chrome")
-                .setArgs(Arrays.asList("--disable-dev-shm-usage", "--no-sandbox")));
+                .setArgs(Arrays.asList("--disable-dev-shm-usage", "--no-sandbox", "--start-maximized")));
 
-        context = browser.newContext();
+        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(null));
         page = context.newPage();
         page.setDefaultTimeout(60000);
 
