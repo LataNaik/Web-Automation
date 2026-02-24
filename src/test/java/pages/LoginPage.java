@@ -27,7 +27,7 @@ public class LoginPage extends BasePage {
         this.tenantDropdown = page.locator("#user-login-core_common_city");
         this.tenantOption = page.locator(".main-option");
         this.privacyCheckbox = page.locator("#privacy-component-check");
-        this.loginButton = page.locator("#user-login-continue");
+        this.loginButton = page.locator("#formcomposer-submit-action");
     }
 
     /**
@@ -40,7 +40,9 @@ public class LoginPage extends BasePage {
     public HomePage login(String username, String password) {
         enterUsername(username);
         enterPassword(password);
-        selectFirstTenant();
+        if (isTenantDropdownVisible()) {
+            selectFirstTenant();
+        }
         acceptPrivacyPolicy();
         clickLogin();
         waitForPageLoad();
@@ -58,7 +60,9 @@ public class LoginPage extends BasePage {
     public HomePage login(String username, String password, String tenantName) {
         enterUsername(username);
         enterPassword(password);
-        selectTenant(tenantName);
+        if (isTenantDropdownVisible()) {
+            selectTenant(tenantName);
+        }
         acceptPrivacyPolicy();
         clickLogin();
         waitForPageLoad();
@@ -68,10 +72,12 @@ public class LoginPage extends BasePage {
     // ==================== INDIVIDUAL ACTIONS ====================
 
     public void enterUsername(String username) {
+        usernameInput.click();
         usernameInput.fill(username);
     }
 
     public void enterPassword(String password) {
+        passwordInput.click();
         passwordInput.fill(password);
     }
 
@@ -94,6 +100,10 @@ public class LoginPage extends BasePage {
     }
 
     // ==================== VERIFICATION ====================
+
+    public boolean isTenantDropdownVisible() {
+        return tenantDropdown.isVisible();
+    }
 
     public boolean isLoginPageDisplayed() {
         return loginButton.isVisible();

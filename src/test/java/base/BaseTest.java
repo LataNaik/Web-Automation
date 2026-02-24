@@ -1,10 +1,13 @@
 package base;
 
+import java.util.Arrays;
+
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
@@ -41,6 +44,7 @@ public class BaseTest {
     // Core Playwright objects
     protected Playwright playwright;
     protected Browser browser;
+    protected BrowserContext context;
     protected Page page;
 
     // Helpers available in all tests
@@ -53,14 +57,14 @@ public class BaseTest {
 
     @BeforeMethod
     public void setup() {
-        // Initialize Playwright and browser
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
-                .setHeadless(Boolean.parseBoolean(ConfigReader.get("headless")))
-                .setChannel("chrome"));
+                .setHeadless(Boolean.parseBoolean(ConfigReader.get("HEADLESS")))
+                .setChannel("chrome")
+                .setArgs(Arrays.asList("--disable-dev-shm-usage", "--no-sandbox")));
 
-        // Create page with timeout
-        page = browser.newPage();
+        context = browser.newContext();
+        page = context.newPage();
         page.setDefaultTimeout(60000);
 
         // Initialize helpers
@@ -69,29 +73,25 @@ public class BaseTest {
         screenshot = new ScreenshotHelper(page);
 
         // Navigate to app and login
-        page.navigate(ConfigReader.get("base.url"), new Page.NavigateOptions().setTimeout(60000));
+        page.navigate(ConfigReader.get("BASE_URL"), new Page.NavigateOptions().setTimeout(60000));
         LoginPage loginPage = new LoginPage(page);
-        homePage = loginPage.login(ConfigReader.get("username"), ConfigReader.get("password"));
+        homePage = loginPage.login(ConfigReader.get("USERNAME"), ConfigReader.get("PASSWORD"));
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result) throws InterruptedException {
-        // Capture screenshot on failure
-        if (result.getStatus() == ITestResult.FAILURE) {
-            String testName = result.getMethod().getMethodName();
-            String className = result.getTestClass().getRealClass().getSimpleName();
-            screenshot.captureOnFailure(className, testName);
+    public void tearDown(ITestResult result) {
+        try {
+            if (result.getStatus() == ITestResult.FAILURE && page != null) {
+                String testName = result.getMethod().getMethodName();
+                String className = result.getTestClass().getRealClass().getSimpleName();
+                screenshot.captureOnFailure(className, testName);
+            }
+        } catch (Exception e) {
+            // Ignore screenshot failures during teardown
         }
 
-        // Brief pause for debugging
-        Thread.sleep(1000);
-
-        // Cleanup
-        if (browser != null) {
-            browser.close();
-        }
-        if (playwright != null) {
-            playwright.close();
-        }
+        try { if (context != null) context.close(); } catch (Exception ignored) {}
+        try { if (browser != null) browser.close(); } catch (Exception ignored) {}
+        try { if (playwright != null) playwright.close(); } catch (Exception ignored) {}
     }
 }
