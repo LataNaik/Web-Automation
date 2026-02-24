@@ -114,6 +114,7 @@ public class HomePage extends BasePage {
      * Check if Create Complaint button is visible.
      */
     public boolean isCreateComplaintVisible() {
+        waitForVisible(createComplaintBtn);
         return createComplaintBtn.isVisible();
     }
 
@@ -121,6 +122,7 @@ public class HomePage extends BasePage {
      * Check if Search Complaint button is visible.
      */
     public boolean isSearchComplaintVisible() {
+        waitForVisible(searchComplaintBtn);
         return searchComplaintBtn.isVisible();
     }
 }
