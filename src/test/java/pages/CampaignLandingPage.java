@@ -33,6 +33,7 @@ public class CampaignLandingPage {
         this.createCampaignLink = page.locator(".digit-button-label").nth(2);
         
 
+
        
         this.scratchCardTitle = page.locator("#campaign-home-card-campaign-create-methods-campaign-create-from-scratch");
         this.continueButton = page.locator("#campaign-campaign-home-standalone-create-new-campaign-from-scratch-btn");
