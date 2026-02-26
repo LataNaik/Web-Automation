@@ -23,7 +23,7 @@ public class BednetDraftCampaignPage {
         this.page = page;
         this.campaignTypeDropdown = page.getByRole(AriaRole.BUTTON,
                 new Page.GetByRoleOptions().setName("Select an option"));
-        this.bednetDropdown = page.getByRole(AriaRole.BUTTON).nth(1);
+        this.bednetDropdown = page.locator("div.digit-dropdown-item").nth(1);
         this.nextButton = page.locator("#campaign-create-campaign-formcomposer-setup-campaign-primary-submit-btn");
         this.campaignName = page.locator("input[name='CampaignName']");
         this.startDateInput = page.locator("input[placeholder='Start date']");
@@ -39,7 +39,8 @@ public class BednetDraftCampaignPage {
 
     public void selectBednetDistribution() {
         clickCampaignTypeDropdown();
-        page.getByText("Bednet Distribution").click();
+        page.locator(".main-option").nth(1).click();
+        page.waitForTimeout(1000);
     }
 
     public void clickBednetDropdown() {

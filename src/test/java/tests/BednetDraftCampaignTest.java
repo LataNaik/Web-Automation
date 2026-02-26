@@ -59,6 +59,7 @@ public class BednetDraftCampaignTest extends BaseTest {
         draftPage.fillStartAndEndDates();
         draftPage.clickNext();
         page.waitForLoadState();
+        page.waitForTimeout(2000);
 
         Assert.assertTrue(page.url().contains("create-campaign"),
                 "Should remain in the create campaign flow after submitting the full draft form");
