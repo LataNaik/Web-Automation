@@ -8,24 +8,14 @@ public class CampaignLandingPage {
     private Page page;
 
     // HCM Console card
-    private Locator hcmConsoleCard;
-    private Locator hcmConsoleTitle;
-    private Locator hcmConsoleDescription;
+  
     private Locator createCampaignLink;
-    private Locator myCampaignsLink;
+
 
     // Create Campaign page elements
-    private Locator homeBreadcrumb;
-    private Locator createCampaignBreadcrumb;
-    private Locator heading;
-    private Locator description;
-    private Locator templateCardTitle;
-    private Locator templateCardDescription;
-    private Locator templatesAvailableText;
-    private Locator cloneCardTitle;
-    private Locator cloneCardDescription;
+
     private Locator scratchCardTitle;
-    private Locator scratchCardDescription;
+
     private Locator continueButton;
 
     public CampaignLandingPage(Page page) {

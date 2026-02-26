@@ -5,7 +5,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class BednetDraftCampaignPage {
 
@@ -20,6 +19,7 @@ public class BednetDraftCampaignPage {
     private Locator endDateInput;
 
     public BednetDraftCampaignPage(Page page) {
+    
         this.page = page;
         this.campaignTypeDropdown = page.getByRole(AriaRole.BUTTON,
                 new Page.GetByRoleOptions().setName("Select an option"));
@@ -39,7 +39,7 @@ public class BednetDraftCampaignPage {
 
     public void selectBednetDistribution() {
         clickCampaignTypeDropdown();
-        page.locator(".main-option").nth(1).click();
+        page.getByRole(AriaRole.OPTION).nth(1).click();
         page.waitForTimeout(1000);
     }
 
@@ -61,7 +61,6 @@ public class BednetDraftCampaignPage {
 
     public void fillStartDate() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
-        String dayText = String.valueOf(tomorrow.getDayOfMonth());
         startDateInput.click();
         page.waitForTimeout(500);
         // Pick the day from the calendar popup
