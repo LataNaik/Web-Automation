@@ -7,24 +7,13 @@ public class CampaignLandingPage {
 
     private Page page;
 
-    // HCM Console card
-  
     private Locator createCampaignLink;
-
-
-    // Create Campaign page elements
-
     private Locator scratchCardTitle;
-
     private Locator continueButton;
 
     public CampaignLandingPage(Page page) {
         this.page = page;
         this.createCampaignLink = page.locator(".digit-button-label").nth(2);
-        
-
-
-       
         this.scratchCardTitle = page.locator("#campaign-home-card-campaign-create-methods-campaign-create-from-scratch");
         this.continueButton = page.locator("#campaign-campaign-home-standalone-create-new-campaign-from-scratch-btn");
     }
@@ -35,14 +24,6 @@ public class CampaignLandingPage {
         createCampaignLink.click();
     }
 
-    // public void clickTemplateCard() {
-    //     templateCardTitle.click();
-    // }
-
-    // public void clickCloneCard() {
-    //     cloneCardTitle.click();
-    // }
-
     public void clickScratchCard() {
         scratchCardTitle.click();
     }
@@ -50,9 +31,4 @@ public class CampaignLandingPage {
     public void clickContinue() {
         continueButton.click();
     }
-
-  
-
-
-   
 }
