@@ -12,8 +12,7 @@ public class BoundarySelectionTest extends BednetDraftCampaignTest {
     @BeforeMethod(alwaysRun = true, dependsOnMethods = "navigateToCreateCampaign")
     public void navigateToBoundarySelection() {
         draftPage.clickCampaignTypeDropdown();
-        page.locator(".main-option").nth(1).click();
-        page.waitForTimeout(1000);
+        draftPage.clickBednetDropdown();
         draftPage.clickNext();
         page.waitForLoadState();
         page.waitForTimeout(2000);
