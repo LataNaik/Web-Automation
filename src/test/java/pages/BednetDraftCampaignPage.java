@@ -21,13 +21,16 @@ public class BednetDraftCampaignPage {
     public BednetDraftCampaignPage(Page page) {
     
         this.page = page;
-        this.campaignTypeDropdown = page.getByRole(AriaRole.BUTTON,
-                new Page.GetByRoleOptions().setName("Select an option"));
+        // this.campaignTypeDropdown = page.getByRole(AriaRole.BUTTON,
+        //         new Page.GetByRoleOptions().setName("Select an option"));
+        this.campaignTypeDropdown=page.locator("#campaign-create-campaign-standalone-hcm_select_campaign_type-field");
         this.bednetDropdown = page.locator("div.digit-dropdown-item").nth(1);
         this.nextButton = page.locator("#campaign-create-campaign-formcomposer-setup-campaign-primary-submit-btn");
         this.campaignName = page.locator("input[name='CampaignName']");
-        this.startDateInput = page.locator("input[placeholder='Start date']");
-        this.endDateInput = page.locator("input[placeholder='End date']");
+        // this.startDateInput = page.locator("input[placeholder='Start date']");
+        this.startDateInput=page.locator("input.digit-employeeCard-input").nth(0);
+        this.endDateInput=page.locator("input.digit-employeeCard-input").nth(1);
+        // this.endDateInput = page.locator("input[placeholder='End date']");
     }
 
     // --- Actions ---
@@ -85,5 +88,25 @@ public class BednetDraftCampaignPage {
     public void fillStartAndEndDates() {
         fillStartDate();
         fillEndDate();
+    }
+
+    public boolean isBednetDistributionVisible() {
+        return page.getByText("Bednet Distribution").isVisible();
+    }
+
+    public String getStartDateValue() {
+        String value = startDateInput.inputValue();
+        if (value.isEmpty()) {
+            value = (String) startDateInput.evaluate("el => el.value");
+        }
+        return value;
+    }
+
+    public String getEndDateValue() {
+        String value = endDateInput.inputValue();
+        if (value.isEmpty()) {
+            value = (String) endDateInput.evaluate("el => el.value");
+        }
+        return value;
     }
 }

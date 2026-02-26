@@ -8,7 +8,7 @@ import pages.CampaignLandingPage;
 
 public class CampaignLandingTest extends BaseTest {
 
-    private CampaignLandingPage landingPage;
+    protected CampaignLandingPage landingPage;
 
     @BeforeMethod(alwaysRun = true, dependsOnMethods = "setup")
     public void navigateToLandingPage() {
