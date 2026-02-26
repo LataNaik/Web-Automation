@@ -2,8 +2,6 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-
 
 
 public class BoundarySelectionPage {
@@ -16,6 +14,7 @@ public class BoundarySelectionPage {
     private Locator secondlevel;
     private Locator thirdlevel;
     private Locator fourthlevel;
+    private Locator outside;
 
 
     public BoundarySelectionPage(Page page) {
@@ -26,6 +25,7 @@ public class BoundarySelectionPage {
         this.secondlevel = page.locator(".selecting-boundaries-dropdown input").nth(1);
         this.thirdlevel = page.locator(".selecting-boundaries-dropdown input").nth(2);
         this.fourthlevel = page.locator(".selecting-boundaries-dropdown input").nth(3);
+        this.outside=page.locator(".boundary-selection-label");
     }
 
     // --- Actions ---
@@ -44,18 +44,21 @@ public class BoundarySelectionPage {
     public void clicksecondlevel() {
      
         secondlevel.first().click();
+        outside.click();
         page.waitForTimeout(1000);
     }
 
     public void clickthirdlevel() {
    
         thirdlevel.first().click();
+        outside.click();
         page.waitForTimeout(1000);
     }
 
     public void clickfourthlevel() {
 
         fourthlevel.first().click();
+        outside.click();
         page.waitForTimeout(1000);
     }
 }
