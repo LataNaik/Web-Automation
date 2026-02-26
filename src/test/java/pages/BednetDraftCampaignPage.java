@@ -2,8 +2,6 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-
 import java.time.LocalDate;
 
 public class BednetDraftCampaignPage {
@@ -37,12 +35,6 @@ public class BednetDraftCampaignPage {
 
     public void clickCampaignTypeDropdown() {
         campaignTypeDropdown.click(new Locator.ClickOptions().setForce(true));
-        page.waitForTimeout(1000);
-    }
-
-    public void selectBednetDistribution() {
-        clickCampaignTypeDropdown();
-        page.getByRole(AriaRole.OPTION).nth(1).click();
         page.waitForTimeout(1000);
     }
 
