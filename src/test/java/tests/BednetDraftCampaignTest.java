@@ -28,56 +28,29 @@ public class BednetDraftCampaignTest extends BaseTest {
         draftPage = new BednetDraftCampaignPage(page);
     }
 
-
     @Test(groups = {"regression"})
-    public void verifyCampaignTypeDropdownIsClickable() {
+    public void verifyBednetDraftCampaignFlow() {
+        // Step 1: Click campaign type dropdown and verify Bednet Distribution is visible
         draftPage.clickCampaignTypeDropdown();
         Assert.assertTrue(page.getByText("Bednet Distribution").isVisible(),
                 "Bednet Distribution option should be visible after clicking the campaign type dropdown");
-    }
-    @Test(groups = {"regression"})
-    public void verifySelectBednetDistributionAndClickNext() {
-        draftPage.selectBednetDistribution();
+
+        // Step 2: Select Bednet Distribution and click Next
+        page.locator(".main-option").nth(1).click();
+        page.waitForTimeout(1000);
         draftPage.clickNext();
         page.waitForLoadState();
         Assert.assertTrue(page.url().contains("create-campaign"),
                 "Should remain on create campaign flow after selecting Bednet Distribution and clicking Next");
-    }
 
-    @Test(groups = {"regression"})
-    public void verifyFullDraftCampaignFormSubmission() {
-        draftPage.selectBednetDistribution();
-        draftPage.clickNext();
-        page.waitForLoadState();
+        // Step 3: Enter campaign name and click Next
         page.waitForTimeout(2000);
-
         draftPage.clearAndEnterDynamicCampaignName();
         draftPage.clickNext();
         page.waitForLoadState();
         page.waitForTimeout(2000);
 
-        draftPage.fillStartAndEndDates();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        Assert.assertTrue(page.url().contains("create-campaign"),
-                "Should remain in the create campaign flow after submitting the full draft form");
-    }
-
-
-    @Test(groups = {"regression"})
-    public void verifyStartDateCanBeFilled() {
-        draftPage.selectBednetDistribution();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        draftPage.clearAndEnterDynamicCampaignName();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
+        // Step 4: Fill start date and verify
         draftPage.fillStartDate();
         page.waitForTimeout(1000);
         String startValue = page.locator("input[placeholder='Start date']").inputValue();
@@ -86,20 +59,8 @@ public class BednetDraftCampaignTest extends BaseTest {
         }
         Assert.assertFalse(startValue.isEmpty(),
                 "Start date input should not be empty after filling");
-    }
 
-    @Test(groups = {"regression"})
-    public void verifyEndDateCanBeFilled() {
-        draftPage.selectBednetDistribution();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        draftPage.clearAndEnterDynamicCampaignName();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
+        // Step 5: Fill end date and verify
         draftPage.fillEndDate();
         page.waitForTimeout(1000);
         String endValue = page.locator("input[placeholder='End date']").inputValue();
@@ -108,7 +69,12 @@ public class BednetDraftCampaignTest extends BaseTest {
         }
         Assert.assertFalse(endValue.isEmpty(),
                 "End date input should not be empty after filling");
-    }
 
-    
+        // Step 6: Click Next after dates and verify still in create campaign flow
+        draftPage.clickNext();
+        page.waitForLoadState();
+        page.waitForTimeout(2000);
+        Assert.assertTrue(page.url().contains("create-campaign"),
+                "Should remain in the create campaign flow after submitting the full draft form");
+    }
 }
