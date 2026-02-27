@@ -2,10 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class BednetDraftCampaignPage {
 
@@ -20,14 +17,18 @@ public class BednetDraftCampaignPage {
     private Locator endDateInput;
 
     public BednetDraftCampaignPage(Page page) {
+    
         this.page = page;
-        this.campaignTypeDropdown = page.getByRole(AriaRole.BUTTON,
-                new Page.GetByRoleOptions().setName("Select an option"));
-        this.bednetDropdown = page.getByRole(AriaRole.BUTTON).nth(1);
+        // this.campaignTypeDropdown = page.getByRole(AriaRole.BUTTON,
+        //         new Page.GetByRoleOptions().setName("Select an option"));
+        this.campaignTypeDropdown=page.locator("#campaign-create-campaign-standalone-hcm_select_campaign_type-field");
+        this.bednetDropdown = page.locator("div.digit-dropdown-item").nth(1);
         this.nextButton = page.locator("#campaign-create-campaign-formcomposer-setup-campaign-primary-submit-btn");
         this.campaignName = page.locator("input[name='CampaignName']");
-        this.startDateInput = page.locator("input[placeholder='Start date']");
-        this.endDateInput = page.locator("input[placeholder='End date']");
+        // this.startDateInput = page.locator("input[placeholder='Start date']");
+        this.startDateInput=page.locator("input.digit-employeeCard-input").nth(0);
+        this.endDateInput=page.locator("input.digit-employeeCard-input").nth(1);
+        // this.endDateInput = page.locator("input[placeholder='End date']");
     }
 
     // --- Actions ---
@@ -35,11 +36,6 @@ public class BednetDraftCampaignPage {
     public void clickCampaignTypeDropdown() {
         campaignTypeDropdown.click(new Locator.ClickOptions().setForce(true));
         page.waitForTimeout(1000);
-    }
-
-    public void selectBednetDistribution() {
-        clickCampaignTypeDropdown();
-        page.getByText("Bednet Distribution").click();
     }
 
     public void clickBednetDropdown() {
@@ -60,7 +56,6 @@ public class BednetDraftCampaignPage {
 
     public void fillStartDate() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
-        String dayText = String.valueOf(tomorrow.getDayOfMonth());
         startDateInput.click();
         page.waitForTimeout(500);
         // Pick the day from the calendar popup
@@ -85,5 +80,25 @@ public class BednetDraftCampaignPage {
     public void fillStartAndEndDates() {
         fillStartDate();
         fillEndDate();
+    }
+
+    public boolean isBednetDistributionVisible() {
+        return page.getByText("Bednet Distribution").isVisible();
+    }
+
+    public String getStartDateValue() {
+        String value = startDateInput.inputValue();
+        if (value.isEmpty()) {
+            value = (String) startDateInput.evaluate("el => el.value");
+        }
+        return value;
+    }
+
+    public String getEndDateValue() {
+        String value = endDateInput.inputValue();
+        if (value.isEmpty()) {
+            value = (String) endDateInput.evaluate("el => el.value");
+        }
+        return value;
     }
 }

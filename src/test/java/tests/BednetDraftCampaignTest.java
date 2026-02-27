@@ -4,18 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import base.BaseTest;
 import pages.BednetDraftCampaignPage;
-import pages.CampaignLandingPage;
 
-public class BednetDraftCampaignTest extends BaseTest {
+public class BednetDraftCampaignTest extends CampaignLandingTest {
 
-    private CampaignLandingPage landingPage;
-    private BednetDraftCampaignPage draftPage;
+    protected BednetDraftCampaignPage draftPage;
 
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = "setup")
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = "navigateToLandingPage")
     public void navigateToCreateCampaign() {
-        landingPage = new CampaignLandingPage(page);
         landingPage.clickCreateCampaign();
         page.waitForURL("**/campaign/campaign-home", new com.microsoft.playwright.Page.WaitForURLOptions().setTimeout(30000));
         page.waitForLoadState();
@@ -28,86 +24,48 @@ public class BednetDraftCampaignTest extends BaseTest {
         draftPage = new BednetDraftCampaignPage(page);
     }
 
+    @Override
+    @Test(enabled = false)
+    public void verifyCreateCampaignFromScratch() {}
 
     @Test(groups = {"regression"})
-    public void verifyCampaignTypeDropdownIsClickable() {
+    public void verifyBednetDraftCampaignFlow() {
+        // Step 1: Click campaign type dropdown and verify Bednet Distribution is visible
         draftPage.clickCampaignTypeDropdown();
-        Assert.assertTrue(page.getByText("Bednet Distribution").isVisible(),
+        Assert.assertTrue(draftPage.isBednetDistributionVisible(),
                 "Bednet Distribution option should be visible after clicking the campaign type dropdown");
-    }
-    @Test(groups = {"regression"})
-    public void verifySelectBednetDistributionAndClickNext() {
-        draftPage.selectBednetDistribution();
+
+        // Step 2: Select Bednet Distribution and click Next
+        draftPage.clickBednetDropdown();
         draftPage.clickNext();
         page.waitForLoadState();
         Assert.assertTrue(page.url().contains("create-campaign"),
                 "Should remain on create campaign flow after selecting Bednet Distribution and clicking Next");
-    }
 
-    @Test(groups = {"regression"})
-    public void verifyFullDraftCampaignFormSubmission() {
-        draftPage.selectBednetDistribution();
-        draftPage.clickNext();
-        page.waitForLoadState();
+        // Step 3: Enter campaign name and click Next
         page.waitForTimeout(2000);
-
         draftPage.clearAndEnterDynamicCampaignName();
         draftPage.clickNext();
         page.waitForLoadState();
         page.waitForTimeout(2000);
 
-        draftPage.fillStartAndEndDates();
+        // Step 4: Fill start date and verify
+        draftPage.fillStartDate();
+        page.waitForTimeout(1000);
+        Assert.assertFalse(draftPage.getStartDateValue().isEmpty(),
+                "Start date input should not be empty after filling");
+
+        // Step 5: Fill end date and verify
+        draftPage.fillEndDate();
+        page.waitForTimeout(1000);
+        Assert.assertFalse(draftPage.getEndDateValue().isEmpty(),
+                "End date input should not be empty after filling");
+
+        // Step 6: Click Next after dates and verify still in create campaign flow
         draftPage.clickNext();
         page.waitForLoadState();
-
+        page.waitForTimeout(2000);
         Assert.assertTrue(page.url().contains("create-campaign"),
                 "Should remain in the create campaign flow after submitting the full draft form");
     }
-
-
-    @Test(groups = {"regression"})
-    public void verifyStartDateCanBeFilled() {
-        draftPage.selectBednetDistribution();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        draftPage.clearAndEnterDynamicCampaignName();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        draftPage.fillStartDate();
-        page.waitForTimeout(1000);
-        String startValue = page.locator("input[placeholder='Start date']").inputValue();
-        if (startValue.isEmpty()) {
-            startValue = (String) page.locator("input[placeholder='Start date']").evaluate("el => el.value");
-        }
-        Assert.assertFalse(startValue.isEmpty(),
-                "Start date input should not be empty after filling");
-    }
-
-    @Test(groups = {"regression"})
-    public void verifyEndDateCanBeFilled() {
-        draftPage.selectBednetDistribution();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        draftPage.clearAndEnterDynamicCampaignName();
-        draftPage.clickNext();
-        page.waitForLoadState();
-        page.waitForTimeout(2000);
-
-        draftPage.fillEndDate();
-        page.waitForTimeout(1000);
-        String endValue = page.locator("input[placeholder='End date']").inputValue();
-        if (endValue.isEmpty()) {
-            endValue = (String) page.locator("input[placeholder='End date']").evaluate("el => el.value");
-        }
-        Assert.assertFalse(endValue.isEmpty(),
-                "End date input should not be empty after filling");
-    }
-
-    
 }
